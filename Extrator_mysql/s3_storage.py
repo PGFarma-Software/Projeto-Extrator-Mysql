@@ -10,7 +10,7 @@ from typing import Dict, List, Set, Tuple
 import boto3
 # Cliente assíncrono para upload (aioboto3)
 import aioboto3
-
+import aioboto3.s3
 # --------------------------------------------------
 # CONFIGURAÇÃO DE LOG
 # --------------------------------------------------

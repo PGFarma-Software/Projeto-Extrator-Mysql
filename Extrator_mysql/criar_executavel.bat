@@ -71,6 +71,7 @@ echo Gerando o executável com PyInstaller...
     --add-data "config;config" ^
     --add-data "dicionarios_tipos.json;." ^
     --hidden-import pymysql ^
+    --hidden-import polars-lts-cpu ^
     --name "%PROJECT_NAME%" ^
     %MAIN_SCRIPT%
 

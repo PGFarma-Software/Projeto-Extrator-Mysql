@@ -2,7 +2,7 @@ sqlalchemy~=2.0.37
 pandas~=2.2.3
 pyarrow~=19.0.0
 python-dotenv~=1.0.1
-boto3~=1.36.1
+boto3
 chardet~=5.2.0
 gitpython
 pymongo~=4.10.1
@@ -26,5 +26,5 @@ polars-lts-cpu #Para maior compatibilidade e estabilidade
 mysql
 mysql-connector-python
 aiofiles~=24.1.0
-
-aioboto3~=13.4.0
+pyodbc
+aioboto3

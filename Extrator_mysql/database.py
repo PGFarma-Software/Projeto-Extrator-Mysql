@@ -6,11 +6,12 @@ import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
-from typing import List, Dict, Tuple, Set
+from typing import List, Dict, Tuple, Set, Optional
 
 import pyarrow.parquet as pq
 import pandas as pd
 import polars as pl
+import pyodbc
 import pytz
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Connection
@@ -23,24 +24,65 @@ from storage import enviar_resultados
 # ===================================================
 # CONEXÃO COM O BANCO
 # ===================================================
-def conectar_ao_banco(host: str, port: int, database: str, user: str, password: str,
-                      pool_size: int = 10, max_overflow: int = 20) -> Connection:
+def detectar_driver_mysql():
     """
-    Estabelece conexão com o banco de dados MySQL usando SQLAlchemy.
-    Parâmetros de pool (pool_size, max_overflow) foram adicionados para melhor desempenho
-    em cenários paralelos.
+    Detecta automaticamente o driver ODBC do MySQL disponível no sistema.
+    Retorna o nome do driver mais recente encontrado ou None se nenhum for encontrado.
+    """
+    drivers = [driver for driver in pyodbc.drivers() if "MySQL" in driver]
+    if drivers:
+        logging.info(f"Drivers MySQL ODBC detectados: {drivers}")
+        return drivers[-1]  # Usa o driver mais recente disponível
+    else:
+        logging.error("Nenhum driver ODBC do MySQL foi encontrado.")
+        return None
+
+
+def conectar_ao_banco(host: str = "localhost", port: int = 3306, database: str = None,
+                      user: str = None, password: str = None, pool_size: int = 10,
+                      max_overflow: int = 20, usar_odbc: bool = False) -> Optional[Connection]:
+    """
+    Estabelece conexão com o banco de dados MySQL.
+    Permite escolher entre SQLAlchemy (pymysql) e ODBC de forma dinâmica.
+
+    :param host: Endereço do servidor MySQL (padrão "localhost").
+    :param port: Porta do MySQL (padrão 3306).
+    :param database: Nome do banco de dados.
+    :param user: Usuário do banco de dados.
+    :param password: Senha do banco de dados.
+    :param pool_size: Tamanho do pool de conexões (apenas para SQLAlchemy).
+    :param max_overflow: Número máximo de conexões extras (apenas para SQLAlchemy).
+    :param usar_odbc: Se `True`, usa ODBC detectando o driver disponível. Se `False`, usa SQLAlchemy com pymysql.
+    :return: Objeto de conexão (SQLAlchemy Connection ou pyodbc.Connection).
     """
     try:
         logging.info("Conectando ao banco de dados MySQL...")
-        url_conexao = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
-        engine = create_engine(url_conexao, pool_pre_ping=True, pool_recycle=3600,
-                               pool_size=pool_size, max_overflow=max_overflow)
-        conexao = engine.connect()
-        logging.info("Conexão com o banco de dados MySQL estabelecida com sucesso.")
-        return conexao
+        usar_odbc = True
+        if usar_odbc:
+            driver = detectar_driver_mysql()
+            if not driver:
+                raise Exception("Nenhum driver ODBC do MySQL disponível.")
+
+            dsn = f"DRIVER={{{driver}}};SERVER={host};DATABASE={database};USER={user};PASSWORD={password};PORT={port};OPTION=3;"
+            conexao = pyodbc.connect(dsn, autocommit=True)
+            logging.info(f" Conexão com o banco de dados MySQL via ODBC ({driver}) estabelecida com sucesso.")
+            return conexao
+
+        else:
+            # Conexão via SQLAlchemy (pymysql)
+            if not all([host, database, user, password]):
+                raise ValueError("Para conectar via SQLAlchemy, os parâmetros 'host', 'database', 'user' e 'password' são obrigatórios.")
+
+            url_conexao = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+            engine = create_engine(url_conexao, pool_pre_ping=True, pool_recycle=3600,
+                                   pool_size=pool_size, max_overflow=max_overflow)
+            conexao = engine.connect()
+            logging.info("Conexão com o banco de dados MySQL via SQLAlchemy estabelecida com sucesso.")
+            return conexao
+
     except Exception as e:
         logging.error(f"Erro ao conectar ao banco de dados MySQL: {e}")
-        raise
+        return None
 
 def fechar_conexao(conexao: Connection):
     """Fecha a conexão com o banco de dados."""
@@ -74,7 +116,6 @@ def executar_consultas(
     particoes_criadas = {}
     os.makedirs(pasta_temp, exist_ok=True)
 
-    # Se for execução sequencial, cria uma única conexão; se paralela, cada thread criará a sua
     conexao_persistente = conectar_ao_banco(**conexoes_config)
 
     def processa_consulta(consulta: Dict[str, str]) -> Tuple[str, str, Set[str]]:
@@ -82,18 +123,13 @@ def executar_consultas(
         query = consulta.get("query")
         try:
             inicio = time.time()
-            # Se a consulta for muito grande, pode-se usar chunksize (exemplo comentado abaixo):
-            df_iter = pd.read_sql(query, con=conexao_persistente, chunksize=10000)
-            df_pandas = pd.concat(df_iter)
-            #df_pandas = pd.read_sql(query, con=conexao_persistente)
+            pasta_consulta, particoes = executar_consulta(conexao_persistente, nome_consulta, query, pasta_temp)
             duracao = time.time() - inicio
             logging.info(f"Consulta '{nome_consulta}' processada em {duracao:.2f} segundos.")
-            pasta_consulta, particoes = executar_consulta(conexao_persistente, nome_consulta, query, pasta_temp)
             return nome_consulta, pasta_consulta, particoes
         except Exception as e:
             logging.error(f"Erro ao processar consulta '{nome_consulta}': {e}")
             return nome_consulta, None, set()
-
 
     try:
         if paralela:
@@ -115,7 +151,6 @@ def executar_consultas(
     finally:
         if conexao_persistente:
             fechar_conexao(conexao_persistente)
-            logging.info("Conexão com o banco de dados fechada (sequencial).")
 
     return resultados, particoes_criadas
 
