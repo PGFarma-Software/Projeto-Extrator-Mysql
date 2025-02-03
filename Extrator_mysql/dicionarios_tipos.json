@@ -54,7 +54,9 @@
     "idEmp": "string",
     "idEmpresa": "string",
     "DataHoraAtualizacao": "string",
-    "AnoMesDia": "string"
+    "Ano": "string",
+    "Mes": "string",
+    "Dia": "string"
   },
   "Estoque": {
     "CodigoProduto": "string",
@@ -143,6 +145,8 @@
     "idEmp": "string",
     "idEmpresa": "string",
     "DataHoraAtualizacao": "string",
-    "AnoMesDia": "string"
+    "Ano": "string",
+    "Mes": "string",
+    "Dia": "string"
   }
 }
