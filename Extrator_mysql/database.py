@@ -227,7 +227,7 @@ def processar_dados(df_pandas: pd.DataFrame, nome: str, pasta_temp: str) -> Tupl
             raise ValueError("A coluna 'idEmpresa' é obrigatória para particionamento.")
 
         logging.info(f"Salvando '{nome}' em formato particionado...")
-        partition_cols = ["idEmpresa"] + (["Ano", "Mes", "Dia"] if coluna_data else [])
+        partition_cols = ["idEmpresa"] + (["Ano", "Mes"] if coluna_data else [])
         pq.write_to_dataset(
             df_polars.to_arrow(),
             root_path=pasta_consulta,

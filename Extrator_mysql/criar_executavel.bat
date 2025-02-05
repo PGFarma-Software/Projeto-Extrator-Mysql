@@ -72,6 +72,14 @@ echo Gerando o executável com PyInstaller...
     --add-data "dicionarios_tipos.json;." ^
     --hidden-import pymysql ^
     --hidden-import polars-lts-cpu ^
+    --hidden-import aioboto3 ^
+    --hidden-import aiobotocore ^
+    --hidden-import aiobotocore.session ^
+    --hidden-import aiobotocore.config ^
+    --hidden-import aiobotocore.credentials ^
+    --hidden-import azure.storage.blob ^
+    --hidden-import azure.identity ^
+    --hidden-import azure.core ^
     --name "%PROJECT_NAME%" ^
     %MAIN_SCRIPT%
 
