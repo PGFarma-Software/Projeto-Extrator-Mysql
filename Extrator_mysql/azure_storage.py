@@ -86,7 +86,7 @@ def filtrar_particoes_existentes(particoes_existentes: Set[str], particoes_recar
 def definir_particoes_para_exclusao(particoes_existentes: Set[str], particoes_recarregadas: Set[str]) -> Dict[str, Set[str]]:
     """
     Define as partições a serem excluídas de acordo com o tipo de consulta:
-      - Tipo A (Somente idEmpresa): Se as partições recarregadas não contiverem indicadores de data,
+      - Tipo A (Somente  idEmpresa): Se as partições recarregadas não contiverem indicadores de data,
         a exclusão será feita a nível de idEmpresa.
       - Tipo B (idEmpresa + Data): Se houver informações de data, avalia os níveis Dia, Mes e Ano,
         excluindo somente os dados que estão sendo recarregados.
