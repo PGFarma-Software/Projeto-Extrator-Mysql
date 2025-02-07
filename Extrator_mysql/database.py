@@ -26,8 +26,16 @@ from storage import enviar_resultados
 # ===================================================
 def detectar_driver_mysql():
     """
-    Detecta automaticamente o driver ODBC do MySQL disponível no sistema.
-    Retorna o nome do driver mais recente encontrado ou None se nenhum for encontrado.
+    Detecta e seleciona o driver ODBC mais recente para MySQL disponível no sistema.
+
+    A função utiliza o módulo pyodbc para verificar os drivers instalados que
+    suportam o banco de dados MySQL. Caso existam drivers disponíveis, o mais
+    recente será selecionado e retornado. Se nenhum driver for detectado, a função
+    registrará um erro e retornará `None`.
+
+    Returns:
+        str | None: O nome do driver MySQL mais recente encontrado ou `None` caso
+        nenhum driver seja identificado.
     """
     drivers = [driver for driver in pyodbc.drivers() if "MySQL" in driver]
     if drivers:
@@ -42,18 +50,28 @@ def conectar_ao_banco(host: str = "localhost", port: int = 3306, database: str =
                       user: str = None, password: str = None, pool_size: int = 10,
                       max_overflow: int = 20, usar_odbc: bool = False) -> Optional[Connection]:
     """
-    Estabelece conexão com o banco de dados MySQL.
-    Permite escolher entre SQLAlchemy (pymysql) e ODBC de forma dinâmica.
+        Connects to a MySQL database using either ODBC or SQLAlchemy. Ensures connectivity
+        by selecting the appropriate method based on the provided parameters or
+        configuration. The function can handle connection pooling, utilize MySQL ODBC
+        drivers, and validate required credentials for establishing a secure database
+        connection.
 
-    :param host: Endereço do servidor MySQL (padrão "localhost").
-    :param port: Porta do MySQL (padrão 3306).
-    :param database: Nome do banco de dados.
-    :param user: Usuário do banco de dados.
-    :param password: Senha do banco de dados.
-    :param pool_size: Tamanho do pool de conexões (apenas para SQLAlchemy).
-    :param max_overflow: Número máximo de conexões extras (apenas para SQLAlchemy).
-    :param usar_odbc: Se `True`, usa ODBC detectando o driver disponível. Se `False`, usa SQLAlchemy com pymysql.
-    :return: Objeto de conexão (SQLAlchemy Connection ou pyodbc.Connection).
+        Parameters:
+        host (str): The hostname or IP address of the MySQL server. Defaults to "localhost".
+        port (int): The port number to connect to. Defaults to 3306.
+        database (str): The name of the database to connect to. This parameter is optional unless connecting via SQLAlchemy.
+        user (str): The username for authentication. This parameter is optional unless connecting via SQLAlchemy.
+        password (str): The password for authentication. This parameter is optional unless connecting via SQLAlchemy.
+        pool_size (int): The size of the connection pool to maintain. Defaults to 10.
+        max_overflow (int): The maximum number of connections beyond the connection pool size. Defaults to 20.
+        usar_odbc (bool): Whether to use ODBC to establish the connection. Defaults to False.
+
+        Returns:
+        Optional[Connection]: A database connection object if the connection is successful; otherwise, None.
+
+        Raises:
+        ValueError: If required credentials ('host', 'database', 'user', and 'password') are missing when connecting via SQLAlchemy.
+        Exception: If no MySQL ODBC driver is found or any other error occurs during the connection process.
     """
     try:
         logging.info("Conectando ao banco de dados MySQL...")
@@ -85,7 +103,19 @@ def conectar_ao_banco(host: str = "localhost", port: int = 3306, database: str =
         return None
 
 def fechar_conexao(conexao: Connection):
-    """Fecha a conexão com o banco de dados."""
+    """
+    Closes a database connection.
+
+    This function is used to safely close an existing database connection.
+    It ensures that proper logging is done upon successful closure or
+    any failures encountered during the process.
+
+    Args:
+        conexao (Connection): The database connection object to be closed.
+
+    Raises:
+        Exception: If there is an error during the closing of the connection.
+    """
     try:
         conexao.close()
         logging.info("Conexão com o banco de dados fechada.")
@@ -103,14 +133,30 @@ def executar_consultas(
     workers: int = 4,
 ) -> Tuple[Dict[str, str], Dict[str, Set[str]]]:
     """
-    Executa as consultas no banco de dados de forma paralela ou sequencial.
+    Execute multiple database queries and store the results in a temporary folder. Supports both sequential and
+    parallel processing of queries.
 
-    - Se paralela for False, uma única conexão é criada e reutilizada.
-    - Se paralela for True, cada thread abre e fecha sua própria conexão.
+    Args:
+        conexoes_config (dict): Dictionary containing database connection configuration.
+            Example keys might include 'host', 'port', 'user', 'password', and 'database'.
+        consultas (List[Dict[str, str]]): List of dictionaries, each representing a query to be executed.
+            Each dictionary must have at least the keys 'name' (str) for identifying the query and
+            'query' (str), which holds the SQL query string to be executed.
+        pasta_temp (str): Path to the temporary folder where results and processed data will be stored.
+        paralela (bool, optional): Boolean indicating whether the queries should be processed in parallel.
+            Defaults to False for sequential processing.
+        workers (int, optional): Number of workers/threads to use for parallel processing. Ignored if
+            paralela is False. Defaults to 4.
 
-    Retorna:
-      - Um dicionário com o caminho final dos arquivos processados para cada consulta.
-      - Um dicionário com os conjuntos de partições criadas.
+    Returns:
+        Tuple[Dict[str, str], Dict[str, Set[str]]]: A tuple where:
+            - The first element is a dictionary mapping the name of each query to the path of its results.
+            - The second element is a dictionary mapping the name of each query to a set of file partitions
+              created during query execution.
+
+    Raises:
+        Exception: Logs errors that occur during query execution, including database connection failures
+            or query processing errors.
     """
     resultados = {}
     particoes_criadas = {}
@@ -156,9 +202,35 @@ def executar_consultas(
 
 def executar_consulta(conexao, nome: str, query: str, pasta_temp: str) -> Tuple[str, Set[str]]:
     """
-    Executa uma consulta SQL e retorna o caminho da pasta com os arquivos particionados e as partições criadas.
+    Executes a database query, processes the result, and saves the output to a temporary folder.
 
-    Se a consulta retornar um DataFrame vazio, retorna uma string vazia e um conjunto vazio.
+    This function attempts to execute a SQL query using a given database connection.
+    It logs the execution process, including any connection errors or exceptions, and retries
+    the operation up to a specified number of attempts. If the query returns data, it processes
+    the dataset and returns a path indicating where the data is stored along with information
+    about the processed content.
+
+    Parameters:
+        conexao: Database connection object
+            The active database connection to execute the query.
+        nome: str
+            A descriptive name for the query being executed, used for logging purposes.
+        query: str
+            SQL query string to execute using the given connection.
+        pasta_temp: str
+            Path to the temporary folder where the query results are processed and saved.
+
+    Returns:
+        Tuple[str, Set[str]]:
+            A tuple containing:
+            - A string representing the path to the processed data, if successful.
+            - A set of additional metadata extracted during query result processing.
+
+    Raises:
+        OperationalError:
+            If there is a database connection error during query execution.
+        Exception:
+            If any other error occurs during query execution or processing.
     """
     retries = 5
     for tentativa in range(retries):
@@ -182,12 +254,23 @@ def executar_consulta(conexao, nome: str, query: str, pasta_temp: str) -> Tuple[
 
 def processar_dados(df_pandas: pd.DataFrame, nome: str, pasta_temp: str) -> Tuple[str, Set[str]]:
     """
-    Processa os dados resultantes da consulta:
-      - Realiza tratamentos (ajustes de colunas de data/hora, conversão para Polars).
-      - Adiciona colunas auxiliares (DataHoraAtualizacao, idEmpresa).
-      - Salva os dados em formato Parquet particionado (por idEmpresa e, se aplicável, por Ano/Mes/Dia).
+    Processes a pandas DataFrame by applying transformations, converting it to a Polars DataFrame,
+    and saving the data in a partitioned Parquet format. Additionally, it handles specific adjustments
+    based on the data context (e.g., sales or purchases) and ensures certain columns are correctly
+    formatted or present. The function creates a temporary directory for saving files and logs
+    information about the process flow.
 
-    Retorna o caminho da pasta final e o conjunto de partições criadas.
+    Parameters:
+        df_pandas (pd.DataFrame): Input pandas DataFrame to be processed.
+        nome (str): Name of the dataset, used for context-specific column handling.
+        pasta_temp (str): Path to the temporary folder where files will be saved.
+
+    Returns:
+        Tuple[str, Set[str]]: A tuple where the first element is the path to the generated dataset,
+        and the second element is a set containing the paths of the created partitions.
+
+    Raises:
+        ValueError: If the required 'idEmpresa' column is missing from the processed Polars DataFrame.
     """
     try:
         os.makedirs(pasta_temp, exist_ok=True)
@@ -216,8 +299,7 @@ def processar_dados(df_pandas: pd.DataFrame, nome: str, pasta_temp: str) -> Tupl
             df_polars = df_polars.with_columns(pl.col(coluna_data).cast(pl.Utf8))
             df_polars = df_polars.with_columns([
                 pl.col(coluna_data).str.slice(0, 4).alias("Ano"),
-                pl.col(coluna_data).str.slice(5, 2).alias("Mes"),
-                pl.col(coluna_data).str.slice(8, 2).alias("Dia")
+                pl.col(coluna_data).str.slice(5, 2).alias("Mes")
             ])
          #   amostra_particoes = df_polars.select(["Ano", "Mes", "Dia"]).unique().head(5)
          #   logging.info(f"Amostra das partições para '{nome}':\n{amostra_particoes.to_pandas().to_string(index=False)}")

@@ -148,7 +148,7 @@ def main():
 
         logging.info(f"Executando com {workers} threads.")
 
-        consultas = parametros_mongo_empresa.get("parametrizacaoBi", {}).get("consultas", [])
+        consultas = parametros_mongo_empresa.get("parametrizacaoIntegracao", {}).get("consultas", [])
         if not consultas:
             logging.error("Nenhuma consulta configurada.")
             return
@@ -158,7 +158,7 @@ def main():
             consultas = [c for c in consultas if c.get("name") == consulta_desejada]
             if not consultas:
                 logging.warning(f"Consulta '{consulta_desejada}' não encontrada. Executando todas as consultas.")
-                consultas = parametros_mongo_empresa.get("parametrizacaoBi", {}).get("consultas", [])
+                consultas = parametros_mongo_empresa.get("parametrizacaoIntegracao", {}).get("consultas", [])
 
         if not consultas:
             logging.error("Nenhuma consulta válida encontrada.")
