@@ -295,3 +295,294 @@
 2025-02-07 15:45:04,802 - INFO     - [main.py:89] Tabela de atualização enviada com sucesso!
 2025-02-07 15:45:04,825 - INFO     - [main.py:241] Diretório temporário removido.
 2025-02-07 15:45:04,826 - INFO     - [main.py:244] Sistema encerrado às 07/02/2025 15:45:04
+2025-02-07 19:23:19,166 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-07 19:23:19,184 - INFO     - [main.py:110] Sistema iniciado às 07/02/2025 19:23:19
+2025-02-07 19:23:19,242 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-07 19:23:20,920 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-07 19:23:21,092 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-07 19:23:22,579 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-07 19:23:22,739 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-07 19:23:22,740 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-07 19:23:22,741 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-07 19:23:22,741 - INFO     - [main.py:149] Executando com 1 threads.
+2025-02-07 19:23:22,742 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-07 19:23:22,744 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-07 19:23:22,753 - INFO     - [database.py:86]  Conexão com o banco de dados MySQL via ODBC (MySQL ODBC 8.0 Unicode Driver) estabelecida com sucesso.
+2025-02-07 19:23:22,754 - INFO     - [database.py:238] Executando consulta: Clientes...
+2025-02-07 19:23:22,763 - INFO     - [database.py:244] Consulta 'Clientes' finalizada. Total de registros: 320
+2025-02-07 19:23:22,764 - INFO     - [database.py:278] Processando dados da consulta 'Clientes'...
+2025-02-07 19:23:22,781 - INFO     - [dicionario_dados.py:54] Dicionário de tipos carregado com sucesso.
+2025-02-07 19:23:22,781 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Clientes
+2025-02-07 19:23:22,784 - INFO     - [dicionario_dados.py:144] [Consulta: Clientes] Tipos ajustados com sucesso.
+2025-02-07 19:23:22,784 - INFO     - [database.py:311] Salvando 'Clientes' em formato particionado...
+2025-02-07 19:23:22,809 - INFO     - [database.py:321] Salvamento concluído para 'Clientes'. Arquivos disponíveis em: temp\Clientes
+2025-02-07 19:23:22,810 - INFO     - [database.py:174] Consulta 'Clientes' processada em 0.06 segundos.
+2025-02-07 19:23:22,811 - INFO     - [database.py:238] Executando consulta: CodigoBarras...
+2025-02-07 19:23:23,049 - INFO     - [database.py:244] Consulta 'CodigoBarras' finalizada. Total de registros: 73250
+2025-02-07 19:23:23,050 - INFO     - [database.py:278] Processando dados da consulta 'CodigoBarras'...
+2025-02-07 19:23:23,060 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: CodigoBarras
+2025-02-07 19:23:23,062 - INFO     - [dicionario_dados.py:144] [Consulta: CodigoBarras] Tipos ajustados com sucesso.
+2025-02-07 19:23:23,063 - INFO     - [database.py:311] Salvando 'CodigoBarras' em formato particionado...
+2025-02-07 19:23:23,092 - INFO     - [database.py:321] Salvamento concluído para 'CodigoBarras'. Arquivos disponíveis em: temp\CodigoBarras
+2025-02-07 19:23:23,095 - INFO     - [database.py:174] Consulta 'CodigoBarras' processada em 0.28 segundos.
+2025-02-07 19:23:23,096 - INFO     - [database.py:238] Executando consulta: Compras...
+2025-02-07 19:23:48,192 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-07 19:23:48,211 - INFO     - [main.py:110] Sistema iniciado às 07/02/2025 19:23:48
+2025-02-07 19:23:48,212 - INFO     - [main.py:114] Diretório temporário removido.
+2025-02-07 19:23:48,251 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-07 19:23:49,957 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-07 19:23:50,127 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-07 19:23:51,618 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-07 19:23:51,778 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-07 19:23:51,779 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-07 19:23:51,780 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-07 19:23:51,780 - INFO     - [main.py:149] Executando com 1 threads.
+2025-02-07 19:23:51,781 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-07 19:23:51,782 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-07 19:23:51,792 - INFO     - [database.py:86]  Conexão com o banco de dados MySQL via ODBC (MySQL ODBC 8.0 Unicode Driver) estabelecida com sucesso.
+2025-02-07 19:23:51,793 - INFO     - [database.py:238] Executando consulta: Clientes...
+2025-02-07 19:23:51,804 - INFO     - [database.py:244] Consulta 'Clientes' finalizada. Total de registros: 320
+2025-02-07 19:23:51,805 - INFO     - [database.py:278] Processando dados da consulta 'Clientes'...
+2025-02-07 19:23:51,809 - INFO     - [dicionario_dados.py:54] Dicionário de tipos carregado com sucesso.
+2025-02-07 19:23:51,810 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Clientes
+2025-02-07 19:23:51,811 - INFO     - [dicionario_dados.py:144] [Consulta: Clientes] Tipos ajustados com sucesso.
+2025-02-07 19:23:51,812 - INFO     - [database.py:311] Salvando 'Clientes' em formato particionado...
+2025-02-07 19:23:51,839 - INFO     - [database.py:321] Salvamento concluído para 'Clientes'. Arquivos disponíveis em: temp\Clientes
+2025-02-07 19:23:51,840 - INFO     - [database.py:174] Consulta 'Clientes' processada em 0.05 segundos.
+2025-02-07 19:23:51,841 - INFO     - [database.py:238] Executando consulta: CodigoBarras...
+2025-02-07 19:23:52,075 - INFO     - [database.py:244] Consulta 'CodigoBarras' finalizada. Total de registros: 73250
+2025-02-07 19:23:52,076 - INFO     - [database.py:278] Processando dados da consulta 'CodigoBarras'...
+2025-02-07 19:23:52,086 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: CodigoBarras
+2025-02-07 19:23:52,088 - INFO     - [dicionario_dados.py:144] [Consulta: CodigoBarras] Tipos ajustados com sucesso.
+2025-02-07 19:23:52,089 - INFO     - [database.py:311] Salvando 'CodigoBarras' em formato particionado...
+2025-02-07 19:23:52,120 - INFO     - [database.py:321] Salvamento concluído para 'CodigoBarras'. Arquivos disponíveis em: temp\CodigoBarras
+2025-02-07 19:23:52,123 - INFO     - [database.py:174] Consulta 'CodigoBarras' processada em 0.28 segundos.
+2025-02-07 19:23:52,124 - INFO     - [database.py:238] Executando consulta: Compras...
+2025-02-07 19:24:05,334 - INFO     - [database.py:244] Consulta 'Compras' finalizada. Total de registros: 428763
+2025-02-07 19:24:05,335 - INFO     - [database.py:278] Processando dados da consulta 'Compras'...
+2025-02-07 19:24:05,598 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Compras
+2025-02-07 19:24:05,699 - INFO     - [dicionario_dados.py:114] Coluna 'Fracao' convertida de float64 para int64 automaticamente.
+2025-02-07 19:24:05,829 - INFO     - [dicionario_dados.py:114] Coluna 'Quantidade' convertida de float64 para int64 automaticamente.
+2025-02-07 19:24:06,180 - INFO     - [dicionario_dados.py:144] [Consulta: Compras] Tipos ajustados com sucesso.
+2025-02-07 19:24:06,180 - INFO     - [database.py:311] Salvando 'Compras' em formato particionado...
+2025-02-07 19:24:06,326 - INFO     - [database.py:321] Salvamento concluído para 'Compras'. Arquivos disponíveis em: temp\Compras
+2025-02-07 19:24:06,395 - INFO     - [database.py:174] Consulta 'Compras' processada em 14.27 segundos.
+2025-02-07 19:24:06,396 - INFO     - [database.py:238] Executando consulta: Estoque...
+2025-02-07 19:24:20,522 - INFO     - [database.py:244] Consulta 'Estoque' finalizada. Total de registros: 659223
+2025-02-07 19:24:20,523 - INFO     - [database.py:278] Processando dados da consulta 'Estoque'...
+2025-02-07 19:24:20,664 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Estoque
+2025-02-07 19:24:20,806 - INFO     - [dicionario_dados.py:114] Coluna 'QtdEstoque' convertida de float64 para int64 automaticamente.
+2025-02-07 19:24:20,946 - INFO     - [dicionario_dados.py:114] Coluna 'QtdEstoqueMinimo' convertida de float64 para int64 automaticamente.
+2025-02-07 19:24:21,230 - INFO     - [dicionario_dados.py:144] [Consulta: Estoque] Tipos ajustados com sucesso.
+2025-02-07 19:24:21,231 - INFO     - [database.py:311] Salvando 'Estoque' em formato particionado...
+2025-02-07 19:24:21,548 - INFO     - [database.py:321] Salvamento concluído para 'Estoque'. Arquivos disponíveis em: temp\Estoque
+2025-02-07 19:24:21,596 - INFO     - [database.py:174] Consulta 'Estoque' processada em 15.20 segundos.
+2025-02-07 19:24:21,597 - INFO     - [database.py:238] Executando consulta: Fornecedores...
+2025-02-07 19:24:21,600 - INFO     - [database.py:244] Consulta 'Fornecedores' finalizada. Total de registros: 290
+2025-02-07 19:24:21,601 - INFO     - [database.py:278] Processando dados da consulta 'Fornecedores'...
+2025-02-07 19:24:21,602 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Fornecedores
+2025-02-07 19:24:21,603 - INFO     - [dicionario_dados.py:144] [Consulta: Fornecedores] Tipos ajustados com sucesso.
+2025-02-07 19:24:21,603 - INFO     - [database.py:311] Salvando 'Fornecedores' em formato particionado...
+2025-02-07 19:24:21,607 - INFO     - [database.py:321] Salvamento concluído para 'Fornecedores'. Arquivos disponíveis em: temp\Fornecedores
+2025-02-07 19:24:21,608 - INFO     - [database.py:174] Consulta 'Fornecedores' processada em 0.01 segundos.
+2025-02-07 19:24:21,609 - INFO     - [database.py:238] Executando consulta: Funcionarios...
+2025-02-07 19:24:21,612 - INFO     - [database.py:244] Consulta 'Funcionarios' finalizada. Total de registros: 57
+2025-02-07 19:24:21,612 - INFO     - [database.py:278] Processando dados da consulta 'Funcionarios'...
+2025-02-07 19:24:21,614 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Funcionarios
+2025-02-07 19:24:21,615 - INFO     - [dicionario_dados.py:144] [Consulta: Funcionarios] Tipos ajustados com sucesso.
+2025-02-07 19:24:21,615 - INFO     - [database.py:311] Salvando 'Funcionarios' em formato particionado...
+2025-02-07 19:24:21,621 - INFO     - [database.py:321] Salvamento concluído para 'Funcionarios'. Arquivos disponíveis em: temp\Funcionarios
+2025-02-07 19:24:21,622 - INFO     - [database.py:174] Consulta 'Funcionarios' processada em 0.01 segundos.
+2025-02-07 19:24:21,623 - INFO     - [database.py:238] Executando consulta: Produtos...
+2025-02-07 19:24:23,981 - INFO     - [database.py:244] Consulta 'Produtos' finalizada. Total de registros: 73212
+2025-02-07 19:24:23,983 - INFO     - [database.py:278] Processando dados da consulta 'Produtos'...
+2025-02-07 19:24:24,069 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Produtos
+2025-02-07 19:24:24,078 - INFO     - [dicionario_dados.py:144] [Consulta: Produtos] Tipos ajustados com sucesso.
+2025-02-07 19:24:24,079 - INFO     - [database.py:311] Salvando 'Produtos' em formato particionado...
+2025-02-07 19:24:24,175 - INFO     - [database.py:321] Salvamento concluído para 'Produtos'. Arquivos disponíveis em: temp\Produtos
+2025-02-07 19:24:24,205 - INFO     - [database.py:174] Consulta 'Produtos' processada em 2.58 segundos.
+2025-02-07 19:24:24,205 - INFO     - [database.py:238] Executando consulta: Vendas...
+2025-02-08 17:08:24,228 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-08 17:08:24,245 - INFO     - [main.py:110] Sistema iniciado às 08/02/2025 17:08:24
+2025-02-08 17:08:24,251 - INFO     - [main.py:114] Diretório temporário removido.
+2025-02-08 17:08:24,304 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-08 17:08:25,951 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-08 17:08:26,119 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-08 17:08:27,684 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-08 17:08:27,863 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-08 17:08:27,863 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-08 17:08:27,864 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-08 17:08:27,865 - INFO     - [main.py:149] Executando com 1 threads.
+2025-02-08 17:08:27,865 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-08 17:08:27,867 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-08 17:08:27,875 - INFO     - [database.py:86]  Conexão com o banco de dados MySQL via ODBC (MySQL ODBC 8.0 Unicode Driver) estabelecida com sucesso.
+2025-02-08 17:08:27,876 - INFO     - [database.py:238] Executando consulta: Clientes...
+2025-02-08 17:08:27,886 - INFO     - [database.py:244] Consulta 'Clientes' finalizada. Total de registros: 320
+2025-02-08 17:08:27,886 - INFO     - [database.py:278] Processando dados da consulta 'Clientes'...
+2025-02-08 17:08:27,903 - INFO     - [dicionario_dados.py:54] Dicionário de tipos carregado com sucesso.
+2025-02-08 17:08:27,903 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Clientes
+2025-02-08 17:08:27,906 - INFO     - [dicionario_dados.py:144] [Consulta: Clientes] Tipos ajustados com sucesso.
+2025-02-08 17:08:27,906 - INFO     - [database.py:311] Salvando 'Clientes' em formato particionado...
+2025-02-08 17:08:27,929 - INFO     - [database.py:321] Salvamento concluído para 'Clientes'. Arquivos disponíveis em: temp\Clientes
+2025-02-08 17:08:27,930 - INFO     - [database.py:174] Consulta 'Clientes' processada em 0.05 segundos.
+2025-02-08 17:08:27,931 - INFO     - [database.py:238] Executando consulta: CodigoBarras...
+2025-02-08 17:08:28,594 - INFO     - [database.py:244] Consulta 'CodigoBarras' finalizada. Total de registros: 73250
+2025-02-08 17:08:28,595 - INFO     - [database.py:278] Processando dados da consulta 'CodigoBarras'...
+2025-02-08 17:08:28,605 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: CodigoBarras
+2025-02-08 17:08:28,607 - INFO     - [dicionario_dados.py:144] [Consulta: CodigoBarras] Tipos ajustados com sucesso.
+2025-02-08 17:08:28,607 - INFO     - [database.py:311] Salvando 'CodigoBarras' em formato particionado...
+2025-02-08 17:08:28,635 - INFO     - [database.py:321] Salvamento concluído para 'CodigoBarras'. Arquivos disponíveis em: temp\CodigoBarras
+2025-02-08 17:08:28,638 - INFO     - [database.py:174] Consulta 'CodigoBarras' processada em 0.71 segundos.
+2025-02-08 17:08:28,638 - INFO     - [database.py:238] Executando consulta: Compras...
+2025-02-10 08:12:09,908 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-10 08:12:09,925 - INFO     - [main.py:110] Sistema iniciado às 10/02/2025 08:12:09
+2025-02-10 08:12:09,927 - INFO     - [main.py:114] Diretório temporário removido.
+2025-02-10 08:12:10,292 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-10 08:12:12,010 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-10 08:12:12,173 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-10 08:12:13,690 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-10 08:12:13,846 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-10 08:12:13,847 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-10 08:12:13,847 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-10 08:12:13,848 - INFO     - [main.py:149] Executando com 4 threads.
+2025-02-10 08:12:13,849 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-10 08:12:13,851 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-10 08:12:16,556 - ERROR    - [database.py:102] Erro ao conectar ao banco de dados MySQL: ('HY000', "[HY000] [MySQL][ODBC 8.0(w) Driver]Unknown MySQL server host 'None' (2) (2005) (SQLDriverConnect); [HY000] [MySQL][ODBC 8.0(w) Driver]Unknown MySQL server host 'None' (2) (2005)")
+2025-02-10 08:12:16,558 - INFO     - [database.py:238] Executando consulta: Empresas...
+2025-02-10 08:12:16,565 - ERROR    - [database.py:250] Erro ao executar a consulta 'Empresas': 'NoneType' object has no attribute 'cursor'
+2025-02-10 08:12:16,566 - INFO     - [database.py:174] Consulta 'Empresas' processada em 0.01 segundos.
+2025-02-10 08:12:16,566 - ERROR    - [main.py:183] Nenhuma consulta gerou resultados válidos. Nenhum dado será enviado.
+2025-02-10 08:15:22,904 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-10 08:15:23,000 - INFO     - [main.py:110] Sistema iniciado às 10/02/2025 08:15:23
+2025-02-10 08:15:23,003 - INFO     - [main.py:114] Diretório temporário removido.
+2025-02-10 08:15:23,153 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-10 08:15:40,682 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-10 08:15:40,866 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-10 08:15:42,434 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-10 08:15:42,595 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-10 08:15:42,599 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-10 08:15:42,601 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-10 08:15:42,604 - INFO     - [main.py:149] Executando com 4 threads.
+2025-02-10 08:17:34,978 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-10 08:17:37,635 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-10 08:17:45,080 - ERROR    - [database.py:102] Erro ao conectar ao banco de dados MySQL: ('HY000', "[HY000] [MySQL][ODBC 8.0(w) Driver]Unknown MySQL server host 'None' (2) (2005) (SQLDriverConnect); [HY000] [MySQL][ODBC 8.0(w) Driver]Unknown MySQL server host 'None' (2) (2005)")
+2025-02-10 08:17:54,672 - INFO     - [database.py:238] Executando consulta: Empresas...
+2025-02-10 08:17:54,694 - ERROR    - [database.py:250] Erro ao executar a consulta 'Empresas': 'NoneType' object has no attribute 'cursor'
+2025-02-10 08:17:54,708 - INFO     - [database.py:174] Consulta 'Empresas' processada em 0.04 segundos.
+2025-02-10 08:18:11,237 - ERROR    - [main.py:183] Nenhuma consulta gerou resultados válidos. Nenhum dado será enviado.
+2025-02-10 08:18:22,041 - INFO     - [main.py:236] Aguardando thread pydevd.Writer encerrar...
+2025-02-10 08:18:27,054 - INFO     - [main.py:236] Aguardando thread pydevd.Reader encerrar...
+2025-02-10 08:18:32,076 - INFO     - [main.py:236] Aguardando thread pydevd.CommandThread encerrar...
+2025-02-10 08:18:44,925 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-10 08:18:44,941 - INFO     - [main.py:110] Sistema iniciado às 10/02/2025 08:18:44
+2025-02-10 08:18:44,942 - INFO     - [main.py:114] Diretório temporário removido.
+2025-02-10 08:18:44,981 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-10 08:18:46,765 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-10 08:18:46,932 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-10 08:18:48,396 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-10 08:18:48,552 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-10 08:18:48,552 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-10 08:18:48,553 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-10 08:18:48,553 - INFO     - [main.py:149] Executando com 4 threads.
+2025-02-10 08:18:48,554 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-10 08:18:48,556 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-10 08:18:51,259 - ERROR    - [database.py:102] Erro ao conectar ao banco de dados MySQL: ('HY000', "[HY000] [MySQL][ODBC 8.0(w) Driver]Unknown MySQL server host 'None' (2) (2005) (SQLDriverConnect); [HY000] [MySQL][ODBC 8.0(w) Driver]Unknown MySQL server host 'None' (2) (2005)")
+2025-02-10 08:18:51,261 - INFO     - [database.py:238] Executando consulta: Clientes...
+2025-02-10 08:18:51,264 - ERROR    - [database.py:250] Erro ao executar a consulta 'Clientes': 'NoneType' object has no attribute 'cursor'
+2025-02-10 08:18:51,264 - INFO     - [database.py:174] Consulta 'Clientes' processada em 0.00 segundos.
+2025-02-10 08:18:51,265 - ERROR    - [main.py:183] Nenhuma consulta gerou resultados válidos. Nenhum dado será enviado.
+2025-02-10 08:28:25,878 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-10 08:28:25,894 - INFO     - [main.py:110] Sistema iniciado às 10/02/2025 08:28:25
+2025-02-10 08:28:25,895 - INFO     - [main.py:114] Diretório temporário removido.
+2025-02-10 08:28:25,936 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-10 08:28:27,692 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-10 08:28:27,860 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-10 08:28:29,355 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-10 08:28:29,506 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-10 08:28:29,507 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-10 08:28:29,507 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-10 08:28:29,508 - INFO     - [main.py:149] Executando com 4 threads.
+2025-02-10 08:28:29,509 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-10 08:28:29,510 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-10 08:28:29,518 - INFO     - [database.py:86]  Conexão com o banco de dados MySQL via ODBC (MySQL ODBC 8.0 Unicode Driver) estabelecida com sucesso.
+2025-02-10 08:28:29,519 - INFO     - [database.py:238] Executando consulta: Clientes...
+2025-02-10 08:28:29,531 - INFO     - [database.py:244] Consulta 'Clientes' finalizada. Total de registros: 320
+2025-02-10 08:28:29,532 - INFO     - [database.py:278] Processando dados da consulta 'Clientes'...
+2025-02-10 08:28:29,549 - INFO     - [dicionario_dados.py:54] Dicionário de tipos carregado com sucesso.
+2025-02-10 08:28:29,550 - INFO     - [dicionario_dados.py:63] Dicionário carregado para a consulta: Clientes
+2025-02-10 08:28:29,552 - INFO     - [dicionario_dados.py:144] [Consulta: Clientes] Tipos ajustados com sucesso.
+2025-02-10 08:28:29,553 - INFO     - [database.py:311] Salvando 'Clientes' em formato particionado...
+2025-02-10 08:28:29,576 - INFO     - [database.py:321] Salvamento concluído para 'Clientes'. Arquivos disponíveis em: temp\Clientes
+2025-02-10 08:28:29,577 - INFO     - [database.py:174] Consulta 'Clientes' processada em 0.06 segundos.
+2025-02-10 08:28:29,577 - INFO     - [database.py:121] Conexão com o banco de dados fechada.
+2025-02-10 08:28:29,578 - INFO     - [main.py:187] Resumo das consultas concluídas:
+2025-02-10 08:28:29,578 - INFO     - [main.py:189]  - Clientes: temp\Clientes
+2025-02-10 08:28:29,579 - INFO     - [main.py:196] Iniciando envio da consulta 'Clientes'...
+2025-02-10 08:28:29,579 - INFO     - [storage.py:25] Iniciando envio da consulta 'Clientes' para 'ambos'.
+2025-02-10 08:28:29,608 - INFO     - [azure_storage.py:31] Conexão com o Azure inicializada com sucesso (cliente síncrono).
+2025-02-10 08:28:29,647 - INFO     - [s3_storage.py:33] Conexão com o S3 inicializada com sucesso.
+2025-02-10 08:28:30,396 - INFO     - [s3_storage.py:231] [Clientes] Exclusão no nível idEmpresa: idEmpresa: idEmpresa=6790e86601eb97d1261867a3 (1 partição)
+2025-02-10 08:28:30,437 - INFO     - [azure_storage.py:208] [Clientes] Exclusão no nível idEmpresa: idEmpresa: idEmpresa=6790e86601eb97d1261867a3 (1 partição)
+2025-02-10 08:28:30,566 - INFO     - [s3_storage.py:245] [Clientes] 1 objetos serão deletados (processo crítico).
+2025-02-10 08:28:30,578 - INFO     - [azure_storage.py:222] [Clientes] 1 blobs serão deletados (processo crítico).
+2025-02-10 08:28:30,748 - INFO     - [s3_storage.py:92] [Clientes] Deleção em batch concluída com sucesso para 1 objetos.
+2025-02-10 08:28:30,801 - INFO     - [s3_storage.py:296] [Clientes] Iniciando upload de 1 arquivos para o S3 com 1000 uploads concorrentes...
+2025-02-10 08:28:30,841 - INFO     - [azure_storage.py:175] [Clientes] Deleção em batch concluída com sucesso para 1 blobs.
+2025-02-10 08:28:30,843 - INFO     - [azure_storage.py:278] [Clientes] Iniciando upload de 1 arquivos para o Azure com 1000 uploads concorrentes...
+2025-02-10 08:28:31,537 - INFO     - [azure_storage.py:294] [Clientes] Upload concluído. Enviados: 1, Erros: 0
+2025-02-10 08:28:31,539 - INFO     - [storage.py:79] Todos os arquivos de 'pgfarma/Clientes' enviados para Azure com sucesso.
+2025-02-10 08:28:31,809 - INFO     - [s3_storage.py:311] [Clientes] Upload concluído. Enviados: 1, Erros: 0
+2025-02-10 08:28:31,811 - INFO     - [storage.py:98] Todos os arquivos de 'pgfarma/Clientes' enviados para S3 com sucesso.
+2025-02-10 08:28:31,811 - INFO     - [storage.py:61] Todos os arquivos de 'pgfarma/Clientes' foram enviados com sucesso.
+2025-02-10 08:28:31,812 - INFO     - [main.py:205] Consulta 'Clientes' enviada com sucesso.
+2025-02-10 08:28:31,812 - INFO     - [main.py:217] Resumo do envio: 1 consultas enviadas com sucesso, 0 falhas.
+2025-02-10 08:28:31,813 - INFO     - [main.py:223] Todas as consultas foram enviadas com sucesso. Prosseguindo com a tabela de atualização...
+2025-02-10 08:28:31,813 - INFO     - [main.py:54] A tabela de atualização NÃO será enviada, pois nem todas as consultas foram processadas com sucesso.
+ou a opção de consulta unica foi selecionada.
+2025-02-10 08:28:31,814 - INFO     - [main.py:241] Diretório temporário removido.
+2025-02-10 08:28:31,815 - INFO     - [main.py:244] Sistema encerrado às 10/02/2025 08:28:31
+2025-02-10 08:28:43,802 - INFO     - [logging_config.py:91]  Sistema iniciado no modo: local
+2025-02-10 08:28:43,818 - INFO     - [main.py:110] Sistema iniciado às 10/02/2025 08:28:43
+2025-02-10 08:28:43,855 - INFO     - [mongo.py:42] Conectando ao MongoDB...
+2025-02-10 08:28:45,530 - INFO     - [mongo.py:59] Parâmetros obtidos com sucesso do MongoDB para o cliente 'Cliente 333 - Teste Adriano H Mysql - AdrianoPC'.
+2025-02-10 08:28:45,697 - INFO     - [mongo.py:75] Conectando ao MongoDB...
+2025-02-10 08:28:47,244 - INFO     - [mongo.py:86] Parâmetros obtidos com sucesso do MongoDB: 1 documentos encontrados.
+2025-02-10 08:28:47,400 - INFO     - [config.py:220] Configurando conexão com o banco de dados a partir dos parâmetros.
+2025-02-10 08:28:47,401 - INFO     - [config.py:241] Configurando numero de workers a partir dos parâmetros.
+2025-02-10 08:28:47,402 - INFO     - [main.py:146] Os dados serão enviados para **Azure Blob Storage** no container 'adriano-teste' e para **Amazon S3** no bucket 'docker-teste'.
+2025-02-10 08:28:47,402 - INFO     - [main.py:149] Executando com 4 threads.
+2025-02-10 08:28:47,403 - INFO     - [database.py:77] Conectando ao banco de dados MySQL...
+2025-02-10 08:28:47,405 - INFO     - [database.py:42] Drivers MySQL ODBC detectados: ['MySQL ODBC 8.0 ANSI Driver', 'MySQL ODBC 8.0 Unicode Driver']
+2025-02-10 08:28:47,412 - INFO     - [database.py:86]  Conexão com o banco de dados MySQL via ODBC (MySQL ODBC 8.0 Unicode Driver) estabelecida com sucesso.
+2025-02-10 08:28:47,413 - INFO     - [database.py:238] Executando consulta: Empresas...
+2025-02-10 08:28:47,419 - INFO     - [database.py:244] Consulta 'Empresas' finalizada. Total de registros: 9
+2025-02-10 08:28:47,419 - INFO     - [database.py:278] Processando dados da consulta 'Empresas'...
+2025-02-10 08:28:47,423 - INFO     - [dicionario_dados.py:54] Dicionário de tipos carregado com sucesso.
+2025-02-10 08:28:47,423 - WARNING  - [dicionario_dados.py:61] Nenhum dicionário encontrado para a consulta: Empresas
+2025-02-10 08:28:47,424 - WARNING  - [dicionario_dados.py:93] [Consulta: Empresas] Dicionário de tipos não encontrado. Dados serão retornados sem ajuste.
+2025-02-10 08:28:47,425 - INFO     - [database.py:311] Salvando 'Empresas' em formato particionado...
+2025-02-10 08:28:47,443 - INFO     - [database.py:321] Salvamento concluído para 'Empresas'. Arquivos disponíveis em: temp\Empresas
+2025-02-10 08:28:47,444 - INFO     - [database.py:174] Consulta 'Empresas' processada em 0.03 segundos.
+2025-02-10 08:28:47,445 - INFO     - [database.py:121] Conexão com o banco de dados fechada.
+2025-02-10 08:28:47,446 - INFO     - [main.py:187] Resumo das consultas concluídas:
+2025-02-10 08:28:47,446 - INFO     - [main.py:189]  - Empresas: temp\Empresas
+2025-02-10 08:28:47,447 - INFO     - [main.py:196] Iniciando envio da consulta 'Empresas'...
+2025-02-10 08:28:47,447 - INFO     - [storage.py:25] Iniciando envio da consulta 'Empresas' para 'ambos'.
+2025-02-10 08:28:47,474 - INFO     - [azure_storage.py:31] Conexão com o Azure inicializada com sucesso (cliente síncrono).
+2025-02-10 08:28:47,502 - INFO     - [s3_storage.py:33] Conexão com o S3 inicializada com sucesso.
+2025-02-10 08:28:48,037 - INFO     - [azure_storage.py:197] [Empresas] Nenhuma partição existente (pertencente à recarga) encontrada para o prefixo 'pgfarma/Empresas'.
+2025-02-10 08:28:48,039 - INFO     - [azure_storage.py:278] [Empresas] Iniciando upload de 1 arquivos para o Azure com 1000 uploads concorrentes...
+2025-02-10 08:28:48,162 - INFO     - [s3_storage.py:220] [Empresas] Nenhuma partição existente (pertencente à recarga) encontrada para o prefixo 'pgfarma/Empresas'.
+2025-02-10 08:28:48,215 - INFO     - [s3_storage.py:296] [Empresas] Iniciando upload de 1 arquivos para o S3 com 1000 uploads concorrentes...
+2025-02-10 08:28:48,664 - INFO     - [azure_storage.py:294] [Empresas] Upload concluído. Enviados: 1, Erros: 0
+2025-02-10 08:28:48,666 - INFO     - [storage.py:79] Todos os arquivos de 'pgfarma/Empresas' enviados para Azure com sucesso.
+2025-02-10 08:28:49,056 - INFO     - [s3_storage.py:311] [Empresas] Upload concluído. Enviados: 1, Erros: 0
+2025-02-10 08:28:49,058 - INFO     - [storage.py:98] Todos os arquivos de 'pgfarma/Empresas' enviados para S3 com sucesso.
+2025-02-10 08:28:49,058 - INFO     - [storage.py:61] Todos os arquivos de 'pgfarma/Empresas' foram enviados com sucesso.
+2025-02-10 08:28:49,059 - INFO     - [main.py:205] Consulta 'Empresas' enviada com sucesso.
+2025-02-10 08:28:49,059 - INFO     - [main.py:217] Resumo do envio: 1 consultas enviadas com sucesso, 0 falhas.
+2025-02-10 08:28:49,060 - INFO     - [main.py:223] Todas as consultas foram enviadas com sucesso. Prosseguindo com a tabela de atualização...
+2025-02-10 08:28:49,060 - INFO     - [main.py:54] A tabela de atualização NÃO será enviada, pois nem todas as consultas foram processadas com sucesso.
+ou a opção de consulta unica foi selecionada.
+2025-02-10 08:28:49,061 - INFO     - [main.py:241] Diretório temporário removido.
+2025-02-10 08:28:49,062 - INFO     - [main.py:244] Sistema encerrado às 10/02/2025 08:28:49
