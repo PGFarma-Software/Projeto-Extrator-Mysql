@@ -50,7 +50,7 @@ def enviar_tabela_atualizacao(portal, destino_tipo, destino_config, consultas_st
     """
     try:
         # 🔹 Verificar se TODAS as consultas foram bem-sucedidas
-        if not consultas_status or not all(consultas_status.values()) or len(consultas_status) != 8:
+        if not consultas_status or not all(consultas_status.values()) or len(consultas_status) < 8:
             logging.info(
                 "A tabela de atualização NÃO será enviada, pois nem todas as consultas foram processadas com sucesso.\n"
                 "ou a opção de consulta unica foi selecionada."
