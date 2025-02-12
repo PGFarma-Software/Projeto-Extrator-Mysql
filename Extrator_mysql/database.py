@@ -11,8 +11,10 @@ from typing import List, Dict, Tuple, Set, Optional
 import pyarrow.parquet as pq
 import pandas as pd
 import polars as pl
+import pymysql
 import pyodbc
 import pytz
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Connection
 from sqlalchemy.exc import OperationalError
@@ -24,74 +26,184 @@ from storage import enviar_resultados
 # ===================================================
 # CONEXÃO COM O BANCO
 # ===================================================
-def detectar_driver_mysql():
+def obter_versao_mysql(host: str, port: int, database: str, user: str, password: str) -> Optional[str]:
     """
-    Detecta e seleciona o driver ODBC mais recente para MySQL disponível no sistema.
+    Obtém a versão do MySQL conectando-se ao banco via PyMySQL.
+    Em servidores antigos (ex.: 4.0.26), pode ocorrer erro de autenticação,
+    fazendo com que a versão não seja obtida (retornando None).
 
-    A função utiliza o módulo pyodbc para verificar os drivers instalados que
-    suportam o banco de dados MySQL. Caso existam drivers disponíveis, o mais
-    recente será selecionado e retornado. Se nenhum driver for detectado, a função
-    registrará um erro e retornará `None`.
+    Args:
+        host (str): Endereço do servidor.
+        port (int): Porta do servidor.
+        database (str): Nome do banco de dados.
+        user (str): Nome de usuário.
+        password (str): Senha de acesso.
 
     Returns:
-        str | None: O nome do driver MySQL mais recente encontrado ou `None` caso
-        nenhum driver seja identificado.
+        Optional[str]: Versão do MySQL (ex.: "8.0.23" ou "4.0.26") ou None se não for possível obter.
     """
-    drivers = [driver for driver in pyodbc.drivers() if "MySQL" in driver]
-    if drivers:
-        logging.info(f"Drivers MySQL ODBC detectados: {drivers}")
-        return drivers[-1]  # Usa o driver mais recente disponível
-    else:
-        logging.error("Nenhum driver ODBC do MySQL foi encontrado.")
+    try:
+        conn = pymysql.connect(host=host, port=port, user=user, password=password, database=database)
+        cursor = conn.cursor()
+        cursor.execute("SELECT VERSION();")
+        result = cursor.fetchone()
+        version = result[0] if result else None
+        cursor.close()
+        conn.close()
+        logging.info(f"Versão do MySQL detectada: {version}")
+        return version
+    except Exception as e:
+        logging.error(f"Erro ao obter a versão do MySQL: {e}")
         return None
 
+def detectar_driver_mysql(host: str, port: int, database: str, user: str, password: str,
+                            driver_especifico: Optional[str] = None) -> Optional[str]:
+    """
+    Detecta e seleciona o driver ODBC mais adequado para MySQL disponível no sistema,
+    identificando automaticamente a versão do banco e recomendando o driver ideal.
+    Se um driver específico for informado e estiver disponível, ele será utilizado.
+
+    Versões mais usadas de drivers ODBC para MySQL:
+      - MySQL ODBC 8.0 Unicode Driver
+      - MySQL ODBC 5.3 Unicode Driver
+      - MySQL ODBC 5.1 Driver
+      - MySQL ODBC 3.51 Driver
+
+    Args:
+        host (str): Endereço do servidor.
+        port (int): Porta do servidor.
+        database (str): Nome do banco de dados.
+        user (str): Nome de usuário.
+        password (str): Senha de acesso.
+        driver_especifico (Optional[str]): Nome do driver desejado, se disponível.
+
+    Returns:
+        Optional[str]: O nome do driver MySQL mais adequado ou None se nenhum driver for detectado.
+    """
+    versao_banco = obter_versao_mysql(host, port, database, user, password)
+    if versao_banco:
+        try:
+            major_version = int(versao_banco.split('.')[0])
+        except Exception as e:
+            logging.error(f"Erro ao interpretar a versão do MySQL: {versao_banco}. Erro: {e}")
+            major_version = None
+    else:
+        major_version = None
+
+    if major_version is None or major_version < 5:
+        driver_recomendado = "MySQL ODBC 3.51 Driver"
+    elif major_version >= 8:
+        driver_recomendado = "MySQL ODBC 8.0 Unicode Driver"
+    else:
+        driver_recomendado = "MySQL ODBC 5.3 Unicode Driver"
+
+    logging.info(f"Driver recomendado para MySQL versão {versao_banco if versao_banco else 'desconhecida'}: {driver_recomendado}")
+
+    drivers = [driver for driver in pyodbc.drivers() if "MySQL" in driver]
+    drivers.sort(reverse=True)
+
+    if driver_especifico and driver_especifico in drivers:
+        logging.info(f"Usando driver específico solicitado: {driver_especifico}")
+        return driver_especifico
+
+    if driver_recomendado in drivers:
+        logging.info(f"O driver recomendado {driver_recomendado} está disponível e será utilizado.")
+        return driver_recomendado
+    else:
+        if drivers:
+            logging.error(f"O driver recomendado {driver_recomendado} para MySQL não está disponível. "
+                          f"Utilizando o driver mais recente disponível: {drivers[0]}.")
+            return drivers[0]
+        else:
+            logging.error("Nenhum driver ODBC do MySQL foi encontrado.")
+            return None
+
+# ------------------------------------------------------------------------------
+# Classe wrapper que cria uma nova conexão para cada cursor via ODBC.
+# Essa abordagem garante que a conexão retorne um cursor iterável, compatível com pandas.
+# ------------------------------------------------------------------------------
+class MultiplexConnection:
+    def __init__(self, dsn: str, autocommit: bool):
+        self._dsn = dsn
+        self._autocommit = autocommit
+
+    def cursor(self):
+        # Cria uma nova conexão ODBC a cada chamada de cursor() e retorna seu cursor.
+        return pyodbc.connect(self._dsn, autocommit=self._autocommit).cursor()
+
+    def close(self):
+        # Como cada cursor abre sua própria conexão, não há conexão persistente para fechar.
+        pass
+
+    def commit(self):
+        pass
+
+    def rollback(self):
+        pass
 
 def conectar_ao_banco(host: str = "localhost", port: int = 3306, database: str = None,
                       user: str = None, password: str = None, pool_size: int = 10,
-                      max_overflow: int = 20, usar_odbc: bool = False) -> Optional[Connection]:
+                      max_overflow: int = 20, usar_odbc: bool = False) -> Optional[object]:
     """
-        Connects to a MySQL database using either ODBC or SQLAlchemy. Ensures connectivity
-        by selecting the appropriate method based on the provided parameters or
-        configuration. The function can handle connection pooling, utilize MySQL ODBC
-        drivers, and validate required credentials for establishing a secure database
-        connection.
+    Conecta a um banco de dados MySQL utilizando ODBC ou SQLAlchemy.
+    Tenta primeiramente via ODBC; se falhar, tenta via SQLAlchemy.
+    A função utiliza os parâmetros de conexão para detectar a versão do MySQL e adaptar
 
-        Parameters:
-        host (str): The hostname or IP address of the MySQL server. Defaults to "localhost".
-        port (int): The port number to connect to. Defaults to 3306.
-        database (str): The name of the database to connect to. This parameter is optional unless connecting via SQLAlchemy.
-        user (str): The username for authentication. This parameter is optional unless connecting via SQLAlchemy.
-        password (str): The password for authentication. This parameter is optional unless connecting via SQLAlchemy.
-        pool_size (int): The size of the connection pool to maintain. Defaults to 10.
-        max_overflow (int): The maximum number of connections beyond the connection pool size. Defaults to 20.
-        usar_odbc (bool): Whether to use ODBC to establish the connection. Defaults to False.
 
-        Returns:
-        Optional[Connection]: A database connection object if the connection is successful; otherwise, None.
+    Args:
+        host (str): Host do banco de dados (default: "localhost").
+        port (int): Porta do banco de dados (default: 3306).
+        database (str): Nome do banco de dados.
+        user (str): Usuário para autenticação.
+        password (str): Senha para autenticação.
+        pool_size (int): Tamanho do pool de conexões (default: 10).
+        max_overflow (int): Número máximo de conexões extras (default: 20).
+        usar_odbc (bool): Indica se deve usar ODBC para conectar (default: False).
 
-        Raises:
-        ValueError: If required credentials ('host', 'database', 'user', and 'password') are missing when connecting via SQLAlchemy.
-        Exception: If no MySQL ODBC driver is found or any other error occurs during the connection process.
+    Returns:
+        Optional[object]: Objeto de conexão se bem-sucedido; caso contrário, None.
     """
     try:
-        logging.info("Conectando ao banco de dados MySQL...")
+        logging.info("Tentando conectar ao banco de dados MySQL...")
+        # Força o uso de ODBC para testar (pois o modelo com MySQL 4.0.26 funcionou via ODBC)
         usar_odbc = True
         if usar_odbc:
-            driver = detectar_driver_mysql()
+            driver = detectar_driver_mysql(host, port, database, user, password)
             if not driver:
                 raise Exception("Nenhum driver ODBC do MySQL disponível.")
 
-            dsn = f"DRIVER={{{driver}}};SERVER={host};DATABASE={database};USER={user};PASSWORD={password};PORT={port};OPTION=3;"
-            conexao = pyodbc.connect(dsn, autocommit=True)
-            logging.info(f" Conexão com o banco de dados MySQL via ODBC ({driver}) estabelecida com sucesso.")
-            return conexao
+            # Monta o DSN conforme o modelo que funcionou com MySQL 4.0.26.
+            # Se o driver for o 3.51, adiciona DisableAuthenticationPlugins=1 para evitar o erro do plugin.
+            dsn = (f"DRIVER={{{driver}}};"
+                   f"SERVER={host};"
+                   f"DATABASE={database};"
+                   f"USER={user};"
+                   f"PASSWORD={password};"
+                   f"PORT={port};"
+                   "OPTION=3;")
+            if "3.51" in driver:
+                dsn += "DisableAuthenticationPlugins=1;"
 
+            # Retorna um objeto MultiplexConnection que implementa cursor() corretamente
+            conexao = MultiplexConnection(dsn, autocommit=True)
+            logging.info(f"Conexão com o banco de dados MySQL via ODBC ({driver}) estabelecida com sucesso.")
+            return conexao
         else:
-            # Conexão via SQLAlchemy (pymysql)
+            # Conexão via SQLAlchemy
             if not all([host, database, user, password]):
                 raise ValueError("Para conectar via SQLAlchemy, os parâmetros 'host', 'database', 'user' e 'password' são obrigatórios.")
 
-            url_conexao = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+            versao = obter_versao_mysql(host, port, database, user, password)
+            try:
+                major_version = int(versao.split('.')[0]) if versao else None
+            except Exception:
+                major_version = None
+
+            if major_version is not None and major_version < 5:
+                url_conexao = f"mysql+mysqldb://{user}:{password}@{host}:{port}/{database}"
+            else:
+                url_conexao = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+
             engine = create_engine(url_conexao, pool_pre_ping=True, pool_recycle=3600,
                                    pool_size=pool_size, max_overflow=max_overflow)
             conexao = engine.connect()
@@ -121,6 +233,7 @@ def fechar_conexao(conexao: Connection):
         logging.info("Conexão com o banco de dados fechada.")
     except Exception as e:
         logging.error(f"Erro ao fechar a conexão: {e}")
+
 
 # ===================================================
 # EXECUÇÃO DE CONSULTAS
