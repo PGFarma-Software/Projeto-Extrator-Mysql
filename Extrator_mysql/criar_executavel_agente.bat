@@ -10,9 +10,9 @@ set PYTHON_313_PATH=.venv\Scripts\python.exe
 set VENV_DIR=.venv
 set BUILD_DIR=build
 set DIST_DIR=dist
-set SPEC_FILE=pgfarma_mysql.spec
-set MAIN_SCRIPT=main.py
-set PROJECT_NAME=pgfarma_mysql
+set SPEC_FILE=PGLoader_Agente_Mysql.spec
+set MAIN_SCRIPT=agente.py
+set PROJECT_NAME=PGLoader_Agente_Mysql
 
 :: Verificar se o Python 3.13 está disponível
 echo Verificando se o Python %PYTHON_VERSION% está instalado...
@@ -70,6 +70,7 @@ echo Gerando o executável com PyInstaller...
     --noconsole ^
     --add-data "config;config" ^
     --add-data "dicionarios_tipos.json;." ^
+    --add-data "main.py;." ^
     --hidden-import pymysql ^
     --hidden-import polars-lts-cpu ^
     --hidden-import aioboto3 ^

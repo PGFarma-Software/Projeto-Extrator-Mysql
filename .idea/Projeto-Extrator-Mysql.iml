@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Extrator_mysql/.venv/Scripts" />
       <excludeFolder url="file://$MODULE_DIR$/Extrator_mysql/.venv/include" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.13 virtualenv at F:\Trabalho\Extratores_Pgfarma\Projeto-Extrator-Mysql\Extrator_mysql\.venv" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.13 virtualenv at F:\Trabalho\Extratores_Pgfarma\PG-Loader-MySql\Extrator_mysql\.venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
