@@ -43,7 +43,7 @@ def obter_versao_mysql(host: str, port: int, database: str, user: str, password:
         Optional[str]: Versão do MySQL (ex.: "8.0.23" ou "4.0.26") ou None se não for possível obter.
     """
     try:
-        conn = pymysql.connect(host=host, port=port, user=user, password=password, database=database)
+        conn = pymysql.connect(host=host, port=port, user=user, password=password, database=database, charset="utf8")
         cursor = conn.cursor()
         cursor.execute("SELECT VERSION();")
         result = cursor.fetchone()

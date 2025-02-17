@@ -16,6 +16,8 @@ import psutil
 import pytz
 import requests
 from flask import Flask, jsonify
+from dotenv import load_dotenv
+
 
 from logging_config import LoggingConfigurator  # Configuração de logging personalizada
 

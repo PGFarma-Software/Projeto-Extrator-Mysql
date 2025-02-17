@@ -67,7 +67,6 @@ echo Gerando o executável com PyInstaller...
 %VENV_DIR%\Scripts\python.exe -m PyInstaller ^
     --clean ^
     --onefile ^
-    --noconsole ^
     --add-data "config;config" ^
     --add-data "dicionarios_tipos.json;." ^
     --add-data "main.py;." ^
@@ -91,9 +90,6 @@ IF ERRORLEVEL 1 (
     exit /B 1
 )
 
-:: Desativar ambiente virtual
-echo Desativando o ambiente virtual...
-deactivate
 
 echo Processo concluído com sucesso!
 echo O executável está localizado no diretório "%DIST_DIR%".

@@ -159,51 +159,51 @@ def configurar_destino_parametros(parametros_mongo_empresas, parametros_mongo_nu
 
    # Processar os documentos da nuvem para configurar Azure e S3
     for doc in parametros_mongo_nuvem:
-        destino = doc.get("Destino", {})  # Captura o campo 'Destino'
+        destino = doc.get("destino", {})  # Captura o campo 'Destino'
 
         if "azure" in destino:
             azure_config = {
-                "account_name": destino["azure"].get("NomeConta"),
-                "account_key": destino["azure"].get("ChaveConta"),
-                "container_name": destino["azure"].get("NomeContainer")
+                "account_name": destino["azure"].get("nomeConta"),
+                "account_key": destino["azure"].get("chaveConta"),
+                "container_name": destino["azure"].get("nomeContainer")
             }
 
         if "s3" in destino:
             s3_config = {
-                "access_key": destino["s3"].get("ChaveAcesso"),
-                "secret_key": destino["s3"].get("ChaveSecreta"),
-                "bucket": destino["s3"].get("Bucket"),
-                "region": destino["s3"].get("Regiao")
+                "access_key": destino["s3"].get("chaveAcesso"),
+                "secret_key": destino["s3"].get("chaveSecreta"),
+                "bucket": destino["s3"].get("bucket"),
+                "region": destino["s3"].get("regiao")
             }
     # Configuração final com base no tipo de destino
     if destino_tipo == "azure":
         return "azure", portal, {
             "azure": {
-                "account_name": destino["azure"].get("NomeConta"),
-                "account_key": destino["azure"].get("ChaveConta"),
-                "container_name": destino["azure"].get("NomeContainer")
+                "account_name": destino["azure"].get("nomeConta"),
+                "account_key": destino["azure"].get("chaveConta"),
+                "container_name": destino["azure"].get("nomeContainer")
             }
         }
     elif destino_tipo == "s3":
         return "s3", portal, {
             "s3": {
-                "access_key": destino["s3"].get("ChaveAcesso"),
-                "secret_key": destino["s3"].get("ChaveSecreta"),
-                "bucket": destino["s3"].get("Bucket").replace("s3://", "").split("/")[0],
-                "region": destino["s3"].get("Regiao")            }
+                "access_key": destino["s3"].get("chaveAcesso"),
+                "secret_key": destino["s3"].get("chaveSecreta"),
+                "bucket": destino["s3"].get("bucket").replace("s3://", "").split("/")[0],
+                "region": destino["s3"].get("regiao")            }
         }
     else:
         return "ambos", portal, {
             "azure": {
-                "account_name": destino["azure"].get("NomeConta"),
-                "account_key": destino["azure"].get("ChaveConta"),
-                "container_name": destino["azure"].get("NomeContainer")
+                "account_name": destino["azure"].get("nomeConta"),
+                "account_key": destino["azure"].get("chaveConta"),
+                "container_name": destino["azure"].get("nomeContainer")
             },
             "s3": {
-                "access_key": destino["s3"].get("ChaveAcesso"),
-                "secret_key": destino["s3"].get("ChaveSecreta"),
-                "bucket": destino["s3"].get("Bucket").replace("s3://", "").split("/")[0],
-                "region": destino["s3"].get("Regiao")
+                "access_key": destino["s3"].get("chaveAcesso"),
+                "secret_key": destino["s3"].get("chaveSecreta"),
+                "bucket": destino["s3"].get("bucket").replace("s3://", "").split("/")[0],
+                "region": destino["s3"].get("regiao")
             }
         }
 

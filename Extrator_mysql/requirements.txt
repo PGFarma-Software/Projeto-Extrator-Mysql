@@ -14,7 +14,6 @@ azure-core~=1.32.0
 pymysql
 colorlog
 pytz~=2024.2
-polars >=0.19.0
 deltalake >=0.14.0
 rich~=13.9.4
 loguru
