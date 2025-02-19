@@ -239,7 +239,7 @@ def configurar_parametro_workers(parametros_mongo: dict) -> int:
         int: valor do parametro
     """
     logging.info("Configurando numero de workers a partir dos parâmetros.")
-    return parametros_mongo.get("parametrizacaoIntegracao", {}).get("Workers", 4)
+    return parametros_mongo.get("parametrizacaoIntegracao", {}).get("workers", 4)
 
 def obter_diretorio_temporario():
     """
